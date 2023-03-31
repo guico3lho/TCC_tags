@@ -4,15 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e822fe90-3e52-4985-b688-a87b8e76fa86" name="Changes" comment="Inicia estrutura do novo projeto do TCC">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/TCC.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/word2vec.model" beforeDir="false" />
+    <list default="true" id="e822fe90-3e52-4985-b688-a87b8e76fa86" name="Changes" comment="fix(word2vec): adiciona código para lidar com modelo não criado">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/df_pp.csv" beforeDir="false" afterPath="$PROJECT_DIR$/assets/df_pp.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/word2vec.model" beforeDir="false" afterPath="$PROJECT_DIR$/assets/word2vec.model" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pipeline/preprocessing.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/pipeline/preprocessing.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pipeline/supervised_lstm_model/preprocessing_for_lstm.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/pipeline/supervised_lstm_model/preprocessing_for_lstm.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,6 +87,8 @@
       <workItem from="1680210817614" duration="2286000" />
       <workItem from="1680292231914" duration="176000" />
       <workItem from="1680292480221" duration="176000" />
+      <workItem from="1680292738184" duration="1487000" />
+      <workItem from="1680294273798" duration="3489000" />
     </task>
     <task id="LOCAL-00001" summary="Configura estrutura do projeto e baixa datasets">
       <created>1678630825305</created>
@@ -119,7 +118,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680213010011</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fix(word2vec): adiciona código para lidar com modelo não criado">
+      <created>1680293699237</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1680293699237</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,6 +134,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Configura estrutura do projeto e baixa datasets" />
     <MESSAGE value="Inicia estrutura do novo projeto do TCC" />
-    <option name="LAST_COMMIT_MESSAGE" value="Inicia estrutura do novo projeto do TCC" />
+    <MESSAGE value="fix(word2vec): adiciona código para lidar com modelo não criado" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(word2vec): adiciona código para lidar com modelo não criado" />
   </component>
 </project>
