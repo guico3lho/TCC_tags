@@ -1,0 +1,37 @@
+stages:
+  prepare_data:
+    cmd: python experiment/prepare_data.py
+    outs:
+      - assets/data/df.csv
+      - assets/data/splits/train/raw.csv
+      - assets/data/splits/val/raw.csv
+      - assets/data/splits/test/raw.csv
+
+  preprocessing:
+    cmd: python experiment/preprocessing.py
+    outs:
+        - assets/data/splits/train/preprocessed.csv
+        - assets/data/splits/val/preprocessed.csv
+        - assets/data/splits/test/preprocessed.csv
+    deps:
+        - assets/data/splits/train/raw.csv
+        - assets/data/splits/val/raw.csv
+        - assets/data/splits/test/raw.csv
+
+  tuning_eval_models:
+    cmd: python experiment/supervised_traditional_models/tuning_eval_models.py
+    deps:
+        - assets/data/splits/train/preprocessed.csv
+        - assets/data/splits/val/preprocessed.csv
+    outs:
+        - assets/traditional_assets/cv_set.pkl
+        - assets/traditional_assets/tfidf_set.pkl
+
+  apply_model:
+    cmd: python experiment/supervised_traditional_models/apply_model.py
+    deps:
+        - assets/data/splits/test/preprocessed.csv
+        - assets/traditional_assets/cv_set.pkl
+        - assets/traditional_assets/tfidf_set.pkl
+    outs:
+        - assets/traditional_assets/predictions.csv
