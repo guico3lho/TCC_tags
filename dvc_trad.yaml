@@ -8,10 +8,10 @@ stages:
 
   preprocessing:
     cmd: python experiment/preprocessing.py
-    outs:
-        - assets/data/splits/train/preprocessed.csv
     deps:
         - assets/data/splits/train/raw.csv
+    outs:
+        - assets/data/splits/train/preprocessed.csv
 
   tuning_eval_models:
     cmd: python experiment/supervised_traditional_models/tuning_eval_models.py
