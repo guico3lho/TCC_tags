@@ -22,26 +22,15 @@ stages:
     cmd: python experiment/supervised_traditional_models/preprocessing_for_trad.py
     deps:
         - assets/data/splits/train/preprocessed.csv
-        - assets/data/splits/val/preprocessed.csv
     outs:
         - assets/traditional_assets/cv_vec.pkl
         - assets/traditional_assets/tfidf_vec.pkl
-        - assets/data/splits/train/bow_cv.csv
-        - assets/data/splits/val/bow_cv.csv
-        - assets/data/splits/train/bow_tfidf.csv
-        - assets/data/splits/val/bow_tfidf.csv
-
-
 
   tuning_eval_models:
     cmd: python experiment/supervised_traditional_models/tuning_eval_models.py
     deps:
         - assets/traditional_assets/cv_vec.pkl
         - assets/traditional_assets/tfidf_vec.pkl
-        - assets/data/splits/train/bow_cv.csv
-        - assets/data/splits/val/bow_cv.csv
-        - assets/data/splits/train/bow_tfidf.csv
-        - assets/data/splits/val/bow_tfidf.csv
 
     outs:
         - assets/traditional_assets/cv_set.pkl
@@ -50,7 +39,7 @@ stages:
   apply_model:
     cmd: python experiment/supervised_traditional_models/apply_model.py
     deps:
-        - assets/data/splits/test/raw.csv
+        - assets/data/splits/test/preprocessed.csv
         - assets/traditional_assets/cv_set.pkl
         - assets/traditional_assets/tfidf_set.pkl
     outs:
