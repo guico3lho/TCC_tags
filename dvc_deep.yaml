@@ -2,12 +2,12 @@ stages:
   prepare_data:
     cmd: python experiment/prepare_data.py
     outs:
-      - assets/data/df.csv
+      - assets/data/df_raw.csv
       - assets/data/splits/train/raw.csv
       - assets/data/splits/val/raw.csv
       - assets/data/splits/test/raw.csv
 
-  preprocessing:
+  text_normalization: # text_normalization
     cmd: python experiment/preprocessing.py
     deps:
       - assets/data/splits/train/raw.csv
@@ -16,26 +16,20 @@ stages:
     outs:
       - assets/data/splits/train/preprocessed.csv
       - assets/data/splits/val/preprocessed.csv
+      - assets/data/splits/test/preprocessed.csv
 
-  create_word_embeddings:
-    cmd: python experiment/supervised_deep_models/create_word_embeddings.py
-    deps:
-      - assets/data/splits/train/preprocessed.csv
-    outs:
-      - assets/deep_assets/word2vec.model
-
-  preprocessing_deep:
-    cmd: python experiment/supervised_deep_models/preprocessing_for_deep.py
+  feat_extract_deep:
+    cmd: python experiment/supervised_deep_models/feat_extract_deep.py
     deps:
       - assets/data/splits/train/preprocessed.csv
       - assets/data/splits/val/preprocessed.csv
-
     outs:
+      - assets/deep_assets/word2vec.model
       - assets/data/splits/train/padded.csv
       - assets/data/splits/val/padded.csv
 
-  tuning_eval_models:
-    cmd: python experiment/supervised_deep_models/tuning_eval_models.py
+  tuning_models:
+    cmd: python experiment/supervised_deep_models/tuning_models.py
     deps:
       - assets/data/splits/train/padded.csv
       - assets/data/splits/val/padded.csv
@@ -43,13 +37,25 @@ stages:
       - assets/deep_assets/tokenizer.json
     outs:
       - assets/deep_assets/lstm_model
+      - assets/deep_assets/bilstm_model
 
-  apply_model:
-    cmd: python experiment/supervised_deep_models/apply_model.py
+  evaluate_models:
+    cmd: python experiment/supervised_deep_models/evaluate_models.py
     deps:
-      - assets/data/splits/test/raw.csv
+      - assets/data/splits/test/preprocessed.csv
       - assets/deep_assets/word2vec.model
       - assets/deep_assets/tokenizer.json
       - assets/deep_assets/lstm_model
+      - assets/deep_assets/bilstm_model
     outs:
-      - assets/deep_assets/predictions.csv
+      - assets/deep_assets/deep_results.csv # or graph similar to the one in the paper
+
+#  apply_model:
+#    cmd: python experiment/supervised_deep_models/apply_model.py
+#    deps:
+#      - assets/data/splits/test/raw.csv
+#      - assets/deep_assets/word2vec.model
+#      - assets/deep_assets/tokenizer.json
+#      - assets/deep_assets/lstm_model
+#    outs:
+#      - assets/deep_assets/predictions.csv

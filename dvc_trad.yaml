@@ -2,45 +2,57 @@ stages:
   prepare_data:
     cmd: python experiment/prepare_data.py
     outs:
-      - assets/data/df.csv
+      - assets/data/df_raw.csv
       - assets/data/splits/train/raw.csv
       - assets/data/splits/val/raw.csv
       - assets/data/splits/test/raw.csv
 
-  preprocessing:
+  text_normalization:
     cmd: python experiment/preprocessing.py
     deps:
-        - assets/data/splits/train/raw.csv
-        - assets/data/splits/val/raw.csv
-        - assets/data/splits/test/raw.csv
+      - assets/data/splits/train/raw.csv
+      - assets/data/splits/val/raw.csv
+      - assets/data/splits/test/raw.csv
     outs:
-        - assets/data/splits/train/preprocessed.csv
-        - assets/data/splits/val/preprocessed.csv
-        - assets/data/splits/test/preprocessed.csv
+      - assets/data/splits/train/preprocessed.csv
+      - assets/data/splits/val/preprocessed.csv
+      - assets/data/splits/test/preprocessed.csv
 
-  preprocessing_trad:
-    cmd: python experiment/supervised_traditional_models/preprocessing_for_trad.py
+  feat_extract_trad:
+    cmd: python experiment/supervised_trad_models/feat_extract_trad.py
     deps:
-        - assets/data/splits/train/preprocessed.csv
+      - assets/data/splits/train/preprocessed.csv
     outs:
-        - assets/traditional_assets/cv_vec.pkl
-        - assets/traditional_assets/tfidf_vec.pkl
+      - assets/trad_assets/cv_vec.pkl
+      - assets/trad_assets/tfidf_vec.pkl
 
-  tuning_eval_models:
-    cmd: python experiment/supervised_traditional_models/tuning_eval_models.py
+  tuning_models:
+    cmd: python experiment/supervised_trad_models/tuning_models.py
     deps:
-        - assets/traditional_assets/cv_vec.pkl
-        - assets/traditional_assets/tfidf_vec.pkl
+      - assets/trad_assets/cv_vec.pkl
+      - assets/trad_assets/tfidf_vec.pkl
+      - assets/data/splits/train/preprocessed.csv
+      - assets/data/splits/val/preprocessed.csv
 
     outs:
-        - assets/traditional_assets/cv_set.pkl
-        - assets/traditional_assets/tfidf_set.pkl
+      - assets/trad_assets/cv_set.pkl # contains cv vec and 4 models
+      - assets/trad_assets/tfidf_set.pkl # contains tfidf vec and 4 models
 
-  apply_model:
-    cmd: python experiment/supervised_traditional_models/apply_model.py
+  evaluate_models:
+    cmd: python experiment/supervised_trad_models/evaluate_models.py
     deps:
-        - assets/data/splits/test/preprocessed.csv
-        - assets/traditional_assets/cv_set.pkl
-        - assets/traditional_assets/tfidf_set.pkl
+      - assets/trad_assets/cv_set.pkl
+      - assets/trad_assets/tfidf_set.pkl
+      - assets/data/splits/test/preprocessed.csv
     outs:
-        - assets/traditional_assets/predictions.csv
+      - assets/trad_assets/trad_results.csv # or graph similar to the one in the paper
+
+
+#  apply_model:
+#    cmd: python experiment/supervised_trad_models/apply_model.py
+#    deps:
+#        - assets/data/splits/test/preprocessed.csv
+#        - assets/trad_assets/cv_set.pkl
+#        - assets/trad_assets/tfidf_set.pkl
+#    outs:
+#        - assets/trad_assets/predictions.csv
