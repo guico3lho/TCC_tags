@@ -3,7 +3,7 @@
 
 # ## Packages
 
-# In[2]:
+# In[27]:
 
 
 import json
@@ -29,7 +29,7 @@ print(os.getcwd())
 
 # #### Suno
 
-# In[4]:
+# In[28]:
 
 
 json_data_path = 'https://raw.githubusercontent.com/guico3lho/DataScience_Assets/main/Datasets/financial_market/suno/suno-petr4.json'
@@ -44,7 +44,7 @@ df_suno_petr = df_suno_petr.rename(columns={'url': 'link'})
 df_suno_petr
 
 
-# In[5]:
+# In[29]:
 
 
 df_suno_petr.explode('tags').groupby('tags').count().sort_values('title', ascending=False)
@@ -52,7 +52,7 @@ df_suno_petr.explode('tags').groupby('tags').count().sort_values('title', ascend
 
 # #### Moneytimes
 
-# In[6]:
+# In[30]:
 
 
 json_data_path = 'https://raw.githubusercontent.com/guico3lho/DataScience_Assets/main/Datasets/financial_market/moneytimes/moneytimes-petr4.json'
@@ -70,13 +70,13 @@ df_moneytimes_petr
 
 # #### Concat suno with moneytimes
 
-# In[ ]:
+# In[30]:
 
 
 
 
 
-# In[8]:
+# In[31]:
 
 
 df_petr4 = pd.concat([df_suno_petr[['title', 'tags', 'link']], df_moneytimes_petr[['title', 'tags', 'link']]])
@@ -94,7 +94,7 @@ df_petr4
 
 # #### Suno
 
-# In[9]:
+# In[32]:
 
 
 json_data_path = 'https://raw.githubusercontent.com/guico3lho/DataScience_Assets/main/Datasets/financial_market/suno/suno-vale3.json'
@@ -113,7 +113,7 @@ df_suno_vale
 
 # #### Moneytimes
 
-# In[10]:
+# In[33]:
 
 
 json_data_path = 'https://raw.githubusercontent.com/guico3lho/DataScience_Assets/main/Datasets/financial_market/moneytimes/moneytimes-vale3.json'
@@ -131,7 +131,7 @@ df_moneytimes_vale
 
 # #### Concat suno with moneytimes
 
-# In[11]:
+# In[34]:
 
 
 df_vale3 = pd.concat([df_suno_vale[['title', 'tags', 'link']], df_moneytimes_vale[['title', 'tags', 'link']]])
@@ -149,7 +149,7 @@ df_vale3
 
 # #### Suno
 
-# In[12]:
+# In[35]:
 
 
 json_data_path = 'https://raw.githubusercontent.com/guico3lho/DataScience_Assets/main/Datasets/financial_market/suno/suno-itub4.json'
@@ -168,7 +168,7 @@ df_suno_itub4
 
 # #### Moneytimes
 
-# In[14]:
+# In[36]:
 
 
 json_data_path = 'https://raw.githubusercontent.com/guico3lho/DataScience_Assets/main/Datasets/financial_market/moneytimes/moneytimes-itub4.json'
@@ -186,7 +186,7 @@ df_moneytimes_itub4
 
 # #### Infomoney
 
-# In[16]:
+# In[37]:
 
 
 json_data_path = 'https://raw.githubusercontent.com/guico3lho/DataScience_Assets/main/Datasets/financial_market/infomoney_test/infomoney-results.json'
@@ -204,7 +204,7 @@ df_infomoney_itub4 = df_infomoney_raw[df_infomoney_raw['tags'].apply(lambda x: '
 # df_moneytimes_vale
 
 
-# In[17]:
+# In[38]:
 
 
 df_itub4 = pd.concat([df_suno_itub4[['title', 'tags', 'link']], df_moneytimes_itub4[['title', 'tags', 'link']], df_infomoney_itub4[['title','tags','link']]])
@@ -222,7 +222,7 @@ df_itub4
 
 # #### Importing
 
-# In[18]:
+# In[39]:
 
 
 # https://drive.google.com/file/d/1OGmCmxSVM0SFdbce6zRXQ458xGmUo5Xs/view?usp=sharing
@@ -230,7 +230,7 @@ df_itub4
 od.download('https://www.kaggle.com/datasets/guico3lho/suno-news-2018-2020', '../assets/data')
 
 
-# In[19]:
+# In[40]:
 
 
 json_data_path = '../assets/data/suno-news-2018-2020/results-full-suno-2020.json'
@@ -244,7 +244,7 @@ df_suno_raw = pd.DataFrame(data)
 
 # #### Filters to remove stocks that are PETR4, ITUB4 or VALE3
 
-# In[20]:
+# In[41]:
 
 
 df_suno_other_stocks = df_suno_raw[df_suno_raw['tags'].apply(lambda x: 'PETR4' not in x
@@ -263,7 +263,7 @@ df_suno_other_stocks = df_suno_raw[df_suno_raw['tags'].apply(lambda x: 'PETR4' n
 
 
 
-# In[21]:
+# In[42]:
 
 
 # df_suno_raw[df_suno_raw['tags'].apply(lambda x: lambda y: y.str.contains('Petrobras') for y in x)]
@@ -272,13 +272,13 @@ df_suno_other_stocks = df_suno_raw[df_suno_raw['tags'].apply(lambda x: 'PETR4' n
 # df_suno_other_stocks[df_suno_other_stocks['tags'].apply(lambda x: 'Itau' in x)]
 
 
-# In[22]:
+# In[43]:
 
 
 df_other_stocks = df_suno_other_stocks.sample(6000)
 
 
-# In[23]:
+# In[44]:
 
 
 df_other_stocks = df_other_stocks[['title', 'tags', 'url']]
@@ -289,87 +289,66 @@ df_other_stocks.reset_index(inplace=True, drop=True)
 
 # ## Concat all loaded data and shuffle to generate final dataframe
 
-# In[24]:
+# In[45]:
 
 
 df_concat = pd.concat([df_petr4, df_vale3, df_itub4, df_other_stocks])
-df = df_concat.sample(frac=1).reset_index(drop=True)
-df
+df_raw = df_concat.sample(frac=1).reset_index(drop=True)
+df_raw
 
 
-# In[25]:
+# In[46]:
 
 
-df.value_counts('label')
+df_raw.value_counts('label').sort_index()
 
 
 # ## Split data into train (80%), val (10%) and test (10%) sets
 
-# In[26]:
+# In[47]:
 
 
 from sklearn.model_selection import train_test_split
 
 # Split data into train and test
-train, rem = train_test_split(df, train_size=0.8, random_state=52)  # 80% train
+train, rem = train_test_split(df_raw, train_size=0.8, random_state=52)  # 80% train
 
-val, test = train_test_split(rem, test_size=0.5, random_state=52)  # 10% val, 10% testc
-
-
-# ## Data Augmentation test
-
-# In[27]:
+val, test = train_test_split(rem, test_size=0.5, random_state=52)  # 10% val, 10% test
 
 
-data_to_augmentate = train.loc[train['label'] == 3]
+# In[48]:
 
 
-# In[28]:
-
-
-sample_title = data_to_augmentate.iloc[2]['title']
-sample_title
-
-
-# In[29]:
-
-
-import translators as ts
-
-
-# In[30]:
-
-
-sample_title_en = ts.translate_text(sample_title, from_language='pt', to_language='en')
-sample_title_en
-
-
-# 
-
-# In[31]:
-
-
-sample_title_pt = ts.translate_text(sample_title_en, from_language='en', to_language='pt')
-sample_title_pt
+# from sklearn.model_selection import train_test_split
+#
+# # Split data into train and test
+# train, test = train_test_split(df, train_size=0.9, random_state=52)  # 80% train
+#
+#
 
 
 # ## Split size
 
-# In[35]:
+# In[49]:
 
 
-df.value_counts('label')
+df_overview_categories = pd.DataFrame(df_raw.value_counts('label').sort_index())
+df_overview_categories = df_overview_categories.assign(category_name=['OTHERS', 'PETR4', 'VALE3', 'ITUB4'])
+df_overview_categories
 
 
-# In[32]:
+# In[50]:
 
 
-print(train.value_counts('label'))
-print(val.value_counts('label'))
-print(test.value_counts('label'))
+print(train.value_counts('label').sort_index())
+print(val.value_counts('label').sort_index())
+print(test.value_counts('label').sort_index())
+print("Total treino: ", train.shape[0])
+print("Total validação: ", val.shape[0])
+print("Total teste: ", test.shape[0])
 
 
-# In[33]:
+# In[51]:
 
 
 train.value_counts('label').plot(kind='bar')
@@ -377,10 +356,10 @@ train.value_counts('label').plot(kind='bar')
 
 # ## Export full df, train, val and test for future use
 
-# In[34]:
+# In[52]:
 
 
-df.to_csv('../assets/data/df.csv', index=False)
+df_raw.to_csv('../assets/data/df_raw.csv', index=False)
 train.to_csv('../assets/data/splits/train/raw.csv', index=False)
 val.to_csv('../assets/data/splits/val/raw.csv', index=False)
 test.to_csv('../assets/data/splits/test/raw.csv', index=False)
