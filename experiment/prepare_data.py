@@ -23,6 +23,7 @@ print(os.getcwd())
 # df_vale.explode('tags').groupby('tags').count().sort_values('title', ascending=False)
 
 
+print("Preparing Dataset for Task 1...")
 # ## Load data
 
 # ### [1] PETR4
@@ -364,3 +365,4 @@ train.to_csv('../assets/data/splits/train/raw.csv', index=False)
 val.to_csv('../assets/data/splits/val/raw.csv', index=False)
 test.to_csv('../assets/data/splits/test/raw.csv', index=False)
 
+print("Preparation Done!")
